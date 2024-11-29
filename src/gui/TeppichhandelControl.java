@@ -36,8 +36,13 @@ public class TeppichhandelControl {
    
     public void zeigeTeppicheAn(){
     	if(thm.getTh() != null){
-    		thv.txtAnzeige.setText(
-    			thm.getTh().gibTeppichZurueck(' '));
+//    		thv.txtAnzeige.setText(
+//    			thm.getTh().gibTeppichZurueck(' '));
+    		String text = "";
+    		for(Teppich teppich : thm.getTeppiche()) {
+    			text += teppich.gibTeppichZurueck(' ');
+    		}
+    		thv.txtAnzeige.setText(text);
     	}
     	else{
     		zeigeInformationsfensterAn("Bisher wurde kein Teppich aufgenommen!");

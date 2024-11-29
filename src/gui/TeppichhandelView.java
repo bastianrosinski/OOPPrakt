@@ -43,16 +43,15 @@ public class TeppichhandelView {
     public MenuItem mnItmCsvExport 		= new MenuItem("csv-Export");   
     //-------Ende Attribute der grafischen Oberflaeche-------
     
-    // speichert temporaer ein Objekt vom Typ Teppich
-    private Teppich teppich;
+
     
-    public TeppichhandelView(Stage primaryStage, TeppichhandelControl avc) {
+    public TeppichhandelView(Stage primaryStage, TeppichhandelControl thc) {
     	Scene scene = new Scene(this.pane, 700, 340);
     	primaryStage.setScene(scene);
     	primaryStage.setTitle("Verwaltung von Teppichenn");
     	primaryStage.show();
     	this.initKomponenten();
-		this.initListener(avc);
+		this.initListener(thc);
     }
     
     private void initKomponenten(){
@@ -124,36 +123,36 @@ public class TeppichhandelView {
  	    pane.getChildren().add(mnbrMenuLeiste);
    }
    
-   private void initListener(TeppichhandelControl avc) {
+   private void initListener(TeppichhandelControl thc) {
 	    btnEingabe.setOnAction(new EventHandler<ActionEvent>() {      
 
 			@Override
             public void handle(ActionEvent e) {
-            	avc.nehmeTeppichAuf(txtArtikelnummer.getText(), txtLaenge.getText(), txtBreite.getText(), txtKategorie.getText(), txtFarben.getText());
+            	thc.nehmeTeppichAuf(txtArtikelnummer.getText(), txtLaenge.getText(), txtBreite.getText(), txtKategorie.getText(), txtFarben.getText());
             }
 	    });
 	    btnAnzeige.setOnAction(new EventHandler<ActionEvent>() {
 	    	@Override
 	        public void handle(ActionEvent e) {
-	            avc.zeigeTeppicheAn();
+	            thc.zeigeTeppicheAn();
 	        } 
    	    });
 	    mnItmCsvImport.setOnAction(new EventHandler<ActionEvent>() {
 	    	@Override
 	        public void handle(ActionEvent e) {
-	       	 	avc.leseAusDatei("csv");
+	       	 	thc.leseAusDatei("csv");
 	    	}
 	    });
 	    mnItmTxtImport.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent e) {
-		     	avc.leseAusDatei("txt");
+		     	thc.leseAusDatei("txt");
 		    }
     	});
 	    mnItmCsvExport.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				avc.schreibeTeppichInCsvDatei();
+				thc.schreibeTeppichInCsvDatei();
 			}	
 	    });
     }
