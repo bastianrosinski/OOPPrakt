@@ -14,6 +14,8 @@ public class TeppichhandelControl {
 	public TeppichhandelControl(Stage primaryStage) {
 		this.thm = new TeppichhandelModel(this);
 		this.thv = new TeppichhandelView(primaryStage, this);
+		
+		
 	}
 	
 	
@@ -66,5 +68,7 @@ public class TeppichhandelControl {
     public void schreibeTeppichInCsvDatei() {
     	thm.schreibeTeppicheInCsvDatei();
     }
+
+
 
 }

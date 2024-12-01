@@ -26,6 +26,7 @@ public class TeppichCsvProduct extends Product {
 		String line;
 		
 		while((line = br.readLine()) != null) {
+			System.out.println("Read line: " + line);
 			if(!line.trim().isEmpty()) {
 				teppiche.add(line);
 			}

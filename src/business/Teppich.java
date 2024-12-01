@@ -71,7 +71,7 @@ public class Teppich {
   		return this.getArtikelnummer() + trenner 
   			+ this.getBreite() + trenner
   		    + this.getLaenge() + trenner
-  		    + this.getKategorie() + trenner + "\n"
+  		    + this.getKategorie() + trenner
   		    + this.getFarbenalsString(trenner) + "\n";
   	}
 }

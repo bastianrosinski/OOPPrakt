@@ -1,1 +1,7 @@
-aaaaa;200;300;xd;Blau,Weiss,Gelb
+22334;2.7;1.9;Orient;Blau,Rot
+33445;3.2;2.1;Modern;Schwarz,Grau
+44556;2.4;1.6;Vintage;Beige,Braun
+55667;3.0;2.5;Kinder;Grün,Bunt
+66778;2.8;2.0;Rustikal;Braun,Beige
+77889;4.0;3.0;Luxe;Weiß,Silber
+88990;2.6;1.8;Boho;Rosa,Gold

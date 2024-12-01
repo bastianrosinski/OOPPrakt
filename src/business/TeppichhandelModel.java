@@ -12,18 +12,21 @@ import factory.TeppichCsvCreator;
 import factory.TeppichTxtCreator;
 import gui.TeppichhandelControl;
 
-public class TeppichhandelModel {
+
+public class TeppichhandelModel{
 	
 	TeppichhandelControl thc;
 	Teppich th;
 	
 	private ArrayList<Teppich> teppiche;
 	
+	
 
 	public TeppichhandelModel(TeppichhandelControl teppichhandelControl) {
 		this.thc = teppichhandelControl;
 		this.th = null;
 		teppiche = new ArrayList<Teppich>();
+		
 	}
 
 	
@@ -52,57 +55,50 @@ public class TeppichhandelModel {
 
 	public void setTh(Teppich th) {
 		this.th = th;
+		this.teppiche.add(th);
+		
+	}
+	
+	public void addTeppich(Teppich tep) {
+		
 	}
 
 
 
+	public void leseAusDatei(String typ) {
+	    System.out.println(typ);
+	    try {
+	        teppiche.clear();
+	        
+	        if (typ != null && (typ.toLowerCase().contains("csv") || typ.toLowerCase().contains("txt"))) {
+	            Product reader;
+	            if (typ.toLowerCase().contains("csv")) {
+	                reader = new factory.TeppichCsvCreator().factoryMethod();
+	            } else {
+	                reader = new factory.TeppichTxtCreator().factoryMethod();
+	            }
+	            
+	            String[] teppiche = reader.leseAusDatei();
 
-	public void leseAusDatei(String typ){
-		System.out.println(typ);
-    	try {
-    		teppiche.clear();
-      		if("csv".equals(typ)){
-      			TeppichCsvCreator creator = new factory.TeppichCsvCreator();
-      			Product reader = creator.factoryMethod();
-//      			BufferedReader ein = new BufferedReader(new FileReader("Teppiche.csv"));
-      			String[] teppiche = reader.leseAusDatei();
-      			String[] zeile = teppiche[0].split(";");
-//      			Teppich av = new Teppich(zeile[0], 
-//      				Float.parseFloat(zeile[1]), 
-//      				Float.parseFloat(zeile[2]), 
-//      				zeile[3], zeile[4].split("_"));
-//      				ein.close();
-//      				setTh(av);
-//      				thc.zeigeInformationsfensterAn("Die Teppiche wurden gelesen!"); 
-      					this.th = new Teppich(zeile[0], Float.parseFloat(zeile[1]), Float.parseFloat(zeile[2]), zeile[3], zeile[4].split(","));
-      					this.teppiche.add(th);
-      					reader.schliesseDatei();
-      		} else if(typ.equals("txt")) {
-      			TeppichTxtCreator creator = new factory.TeppichTxtCreator();
-      			Product reader = creator.factoryMethod();
-      			String[] zeile = reader.leseAusDatei()[0].split(";");
-      			
-      			for(String s: zeile) {
-      				System.out.println(s);
-      			}
-      			
-      			this.th = new Teppich(zeile[0], Float.parseFloat(zeile[1]), Float.parseFloat(zeile[2]), zeile[3], zeile[4].split(","));
-				this.teppiche.add(th);
-				reader.schliesseDatei();
-      		}
-       		else{
-	   			thc.zeigeInformationsfensterAn("Noch nicht implementiert! haha noob");
-	   		}
-		}
-		catch(IOException exc){
-			thc.zeigeFehlermeldungsfensterAn(
-				"IOException beim Lesen!");
-		}
-		catch(Exception exc){
-			exc.printStackTrace();
-			thc.zeigeFehlermeldungsfensterAn(
-				"Unbekannter Fehler beim Lesen!");
-		}
+	            for (String x : teppiche) {
+	                System.out.println("READ THIS ONE:" + x);
+	                String[] zeile = x.split(";");
+	                this.th = new Teppich(zeile[0], Float.parseFloat(zeile[1]), Float.parseFloat(zeile[2]), zeile[3], zeile[4].split(","));
+	                this.teppiche.add(th);
+	            }
+	            reader.schliesseDatei();
+	           
+	        } else {
+	            thc.zeigeInformationsfensterAn("Noch nicht implementiert! haha noob");
+	        }
+	    }
+	    catch(IOException exc) {
+	        thc.zeigeFehlermeldungsfensterAn("IOException beim Lesen!");
+	    }
+	    catch(Exception exc) {
+	        exc.printStackTrace();
+	        thc.zeigeFehlermeldungsfensterAn("Unbekannter Fehler beim Lesen!");
+	    }
 	}
 		
 	public void schreibeTeppicheInCsvDatei() {
@@ -138,7 +134,7 @@ public class TeppichhandelModel {
 			try {
 				System.out.println(getTh().gibTeppichZurueck(';'));
 				BufferedWriter aus 
-					= new BufferedWriter(new FileWriter("TeeladenAusgabe.txt", true));
+					= new BufferedWriter(new FileWriter("TeppichAusgabe.txt", true));
 				aus.write(th.gibTeppichZurueck(';'));
 				aus.close();
 				System.out.println(th.gibTeppichZurueck(';'));
@@ -160,6 +156,7 @@ public class TeppichhandelModel {
 				"Teeladen wurde nicht gesetzt");
 		}
 	}
+
 
 	
 }
