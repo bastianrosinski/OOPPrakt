@@ -11,25 +11,35 @@ import factory.Product;
 import factory.TeppichCsvCreator;
 import factory.TeppichTxtCreator;
 import gui.TeppichhandelControl;
+import ownUtil.Observable;
+import ownUtil.Observer;
 
 
-public class TeppichhandelModel{
+public class TeppichhandelModel implements Observable {
 	
+	private static TeppichhandelModel instance;
 	TeppichhandelControl thc;
 	Teppich th;
 	
 	private ArrayList<Teppich> teppiche;
+	private ArrayList<Observer> observers;
 	
 	
 
-	public TeppichhandelModel(TeppichhandelControl teppichhandelControl) {
+	private TeppichhandelModel(TeppichhandelControl teppichhandelControl) {
 		this.thc = teppichhandelControl;
 		this.th = null;
-		teppiche = new ArrayList<Teppich>();
+		this.observers = new ArrayList<Observer>();
+		this.teppiche = new ArrayList<Teppich>();
 		
 	}
 
-	
+	public static TeppichhandelModel getInstance(TeppichhandelControl teppichhandelControl) {
+        if (instance == null) {
+            instance = new TeppichhandelModel(teppichhandelControl);
+        }
+        return instance;
+    }
 
 
 	public ArrayList<Teppich> getTeppiche() {
@@ -87,6 +97,7 @@ public class TeppichhandelModel{
 	                this.teppiche.add(th);
 	            }
 	            reader.schliesseDatei();
+	            notifyObservers();
 	           
 	        } else {
 	            thc.zeigeInformationsfensterAn("Noch nicht implementiert! haha noob");
@@ -154,6 +165,27 @@ public class TeppichhandelModel{
 		} else {
 			thc.zeigeFehlermeldungsfensterAn(
 				"Teeladen wurde nicht gesetzt");
+		}
+	}
+
+	@Override
+	public void addObserver(Observer obs) {
+		// TODO Auto-generated method stub
+		observers.add(obs);
+		
+	}
+
+	@Override
+	public void removeObserver(Observer obs) {
+		// TODO Auto-generated method stub
+		observers.remove(obs);
+	}
+
+	@Override
+	public void notifyObservers() {
+		// TODO Auto-generated method stub
+		for(Observer o : observers) { 
+			o.update();
 		}
 	}
 

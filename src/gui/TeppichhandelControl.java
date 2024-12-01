@@ -5,17 +5,17 @@ import business.TeppichhandelModel;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import ownUtil.MeldungsfensterAnzeiger;
+import ownUtil.Observer;
 
-public class TeppichhandelControl {
+public class TeppichhandelControl implements Observer {
 	
 	TeppichhandelView thv;
 	public TeppichhandelModel thm;
 	
 	public TeppichhandelControl(Stage primaryStage) {
-		this.thm = new TeppichhandelModel(this);
+		this.thm = TeppichhandelModel.getInstance(this);
 		this.thv = new TeppichhandelView(primaryStage, this);
-		
-		
+		thm.addObserver(this);
 	}
 	
 	
@@ -38,8 +38,6 @@ public class TeppichhandelControl {
    
     public void zeigeTeppicheAn(){
     	if(thm.getTh() != null){
-//    		thv.txtAnzeige.setText(
-//    			thm.getTh().gibTeppichZurueck(' '));
     		String text = "";
     		for(Teppich teppich : thm.getTeppiche()) {
     			text += teppich.gibTeppichZurueck(' ');
@@ -49,6 +47,7 @@ public class TeppichhandelControl {
     	else{
     		zeigeInformationsfensterAn("Bisher wurde kein Teppich aufgenommen!");
     	}
+    	
     }    
     
     public void zeigeInformationsfensterAn(String meldung){
@@ -68,6 +67,13 @@ public class TeppichhandelControl {
     public void schreibeTeppichInCsvDatei() {
     	thm.schreibeTeppicheInCsvDatei();
     }
+
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		zeigeTeppicheAn();
+	}
 
 
 
